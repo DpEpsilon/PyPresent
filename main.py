@@ -13,7 +13,8 @@ pygame.display.set_mode((WIDTH, HEIGHT))
 screen = pygame.display.get_surface()
 screen.fill(BACKGROUND_COLOUR)
 
-s = slide.TextSlide([slide.TextBox(20,20,150,200,"I like muffins and cheesecacke emacs is the best"), slide.TextBox(20, 50, 150, 200, "LOLOL overlap lol hs1917")], \
+s = slide.TextSlide([slide.TextBox(20,20,150,200,"I like muffins and cheesecacke emacs is the best"), \
+	slide.TextBox(20, 50, 150, 200, "LOLOL overlap lol hs1917")], \
 	[],BACKGROUND_COLOUR)
 s.draw_slide(screen)
 pygame.display.flip()

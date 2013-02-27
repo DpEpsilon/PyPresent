@@ -16,8 +16,14 @@ class TextBox():
 		self.render()
 
 	def render(self):
-		self.surf = pygame.Surface((self.width, self.height))
+		self.surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA, 32).convert_alpha() # This surface is transparent
 		wrap.render_text(self.surf, self.text, self.font, self.font_colour)
+
+class ImageBox():
+	def __init__(self, x, y, image, width=None, height=None):
+		self.x = x;	self.y = y
+		self.width = width; self.height = height
+		self.image = image
 
 class TextSlide():
 	def __init__(self, text_boxes, images, back_colour):
@@ -26,5 +32,7 @@ class TextSlide():
 		self.back_colour = back_colour
 
 	def draw_slide(self, screen_surf):
+		for image in self.images:
+			screen_surf.blit(image.image, (image.x, image.y))
 		for text_box in self.text_boxes:
 			screen_surf.blit(text_box.surf, (text_box.x, text_box.y))
