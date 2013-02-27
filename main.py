@@ -4,7 +4,6 @@ from pygame.locals import *
 WIDTH = 200
 HEIGHT = 400
 BACKGROUND_COLOUR = (0, 0, 0)
-TEXT_COLOR = (255, 255, 255)
 
 # Modules will assume that pygame has been initialised, therefore they are imported after pygame.init()
 pygame.init()
