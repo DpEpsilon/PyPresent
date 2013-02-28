@@ -16,7 +16,8 @@ screen.fill(BACKGROUND_COLOUR)
 
 s = slide.TextSlide([slide.TextBox(20,20,150,200,"I like muffins and cheesecacke emacs is the best"), \
 	slide.TextBox(20, 50, 150, 200, "LOLOL overlap lol hs1917")], \
-	[],BACKGROUND_COLOUR)
+	[slide.ImageBox(20, 100, "bliss.jpg", 150, 250)], \
+	BACKGROUND_COLOUR)
 s.draw_slide(screen)
 pygame.display.flip()
 

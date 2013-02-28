@@ -20,10 +20,20 @@ class TextBox():
 		wrap.render_text(self.surf, self.text, self.font, self.font_colour)
 
 class ImageBox():
-	def __init__(self, x, y, image, width=None, height=None):
+	def __init__(self, x, y, image_path, width=None, height=None):
 		self.x = x;	self.y = y
 		self.width = width; self.height = height
-		self.image = image
+		self.image_path = image_path
+		self.image = None
+		#Note: Loading image in init for now
+		self.load_image()
+	def load_image(self):
+		self.image = pygame.image.load(self.image_path)
+		if self.width is None:
+			self.width = self.image.get_width()
+		if self.height is None:
+			self.height = self.image.get_height()
+		self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
 class TextSlide():
 	def __init__(self, text_boxes, images, back_colour):
