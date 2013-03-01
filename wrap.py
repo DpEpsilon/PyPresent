@@ -1,22 +1,27 @@
 import pygame
 from pygame.locals import *
 
-def render_text(surface, text, font, font_colour):
+def render_text(width, text, font, font_colour, back_colour):
 	text = text.split()
 	dest_height = 0
 	start_line = end_line = 0
-	width = surface.get_width()
-	height = surface.get_height()
-	render_font = None
+	lines = []
 
 	while end_line <= len(text):
 		while end_line <= len(text) and font.size(" ".join(text[start_line:end_line]))[0] < width:
 			end_line += 1
 		if (start_line == end_line):
 			raise Exception("Width too small")
-		temp_surf = font.render(" ".join(text[start_line:end_line-1]), True, font_colour)
-		surface.blit(temp_surf, (0, dest_height))
-		dest_height += font.size(" ".join(text[start_line:end_line-1]))[1]
+		lines.append((font.render(" ".join(text[start_line:end_line-1]), True, font_colour), dest_height))
+		dest_height += lines[-1][0].get_height()
 		start_line = end_line-1
-		if (dest_height > height):
-			raise Exception("Height too small")
+
+	if back_colour is None:
+		rend_surf = pygame.Surface((width, dest_height), pygame.SRCALPHA, 32).convert_alpha() # This surface is transparent
+	else:
+		rend_surf = pygame.Surface((width, dest_height))
+		rend_surf.fill(back_colour)
+	for line in lines:
+		rend_surf.blit(line[0], (0, line[1]))
+
+	return rend_surf
