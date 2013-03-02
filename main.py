@@ -6,7 +6,8 @@ WIDTH = 200
 HEIGHT = 400
 BACKGROUND_COLOUR = (0, 0, 0)
 
-# Modules will assume that pygame has been initialised, therefore they are imported after pygame.init()
+# Modules will assume that pygame has been initialised,
+# therefore they are imported after pygame.init()
 pygame.init()
 import slide
 
@@ -17,10 +18,11 @@ def test_func():
 	global s
 	s.text_boxes.append(slide.TextBox(20, 300, "WORKED", 150, back_colour=(0, 0, 0)))
 
-s = slide.TextSlide([slide.TextBox(20, 20, "I like muffins and cheesecacke emacs is the best", 150), \
-	slide.TextBox(20, 100, "LOLOL overlap lol hs1917", 150, back_colour=(255, 0, 0), button_func=test_func)], \
-	[slide.ImageBox(20, 100, "bliss.jpg", 150, 250)], \
-	BACKGROUND_COLOUR)
+	s = slide.TextSlide(\
+		[slide.TextBox(20, 20, "I like muffins and cheesecacke emacs is the best", 150),\
+			 slide.TextBox(20, 100, "LOLOL overlap lol hs1917",\
+							   150, back_colour=(255, 0, 0), button_func=test_func)], \
+			[slide.ImageBox(20, 100, "bliss.jpg", 150, 250)], BACKGROUND_COLOUR)
 
 while True:
 
@@ -33,7 +35,8 @@ while True:
 			for box in s.text_boxes:
 				if box.button_func is None:
 					continue
-				if event.pos[0] >= box.x and event.pos[0] <= box.x+box.width and event.pos[1] >= box.y and event.pos[1] <= box.y+box.height:
+				if event.pos[0] >= box.x and event.pos[0] <= box.x+box.width and\
+						event.pos[1] >= box.y and event.pos[1] <= box.y+box.height:
 					box.button_func()
 		if event.type == QUIT:
 			break

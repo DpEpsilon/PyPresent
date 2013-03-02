@@ -6,7 +6,9 @@ default_font = pygame.font.SysFont("arial", 15)
 default_colour = (255, 255, 255)
 
 class TextBox():
-	def __init__(self, x, y, text, width, button_func=None, back_colour=None, font=default_font, font_colour=default_colour):
+	def __init__(self, x, y, text, width,\
+					 button_func=None, back_colour=None,\
+					 font=default_font, font_colour=default_colour):
 		self.x = x; self.y = y
 		self.text = text
 		self.width = width; self.height = None
@@ -18,7 +20,8 @@ class TextBox():
 		self.render()
 
 	def render(self):
-		self.surf = wrap.render_text(self.width, self.text, self.font, self.font_colour, self.back_colour)
+		self.surf = wrap.render_text(self.width, self.text, self.font,\
+										 self.font_colour, self.back_colour)
 		self.height = self.surf.get_height()
 
 class ImageBox():
@@ -38,7 +41,12 @@ class ImageBox():
 		self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
 class AnimationSlide():
-	pass
+	def __init__(self, animation_func, interval, loop=True):
+		self.animation_func = animation_func
+		self.interval = interval
+		self.loop = loop
+	def draw_slide(self, screen_surf):
+		pass
 		
 class TextSlide():
 	def __init__(self, text_boxes, images, back_colour=None):
