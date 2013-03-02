@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import wrap
+import time
 
 default_font = pygame.font.SysFont("arial", 15)
 default_colour = (255, 255, 255)
@@ -45,13 +46,13 @@ class AnimationSlide():
 		self.animation_func = animation_func
 		self.interval = interval
 		self.loop = loop
-		self.time = 0.0
+		self.start_time = 0.0
 
 	def start_slide(self):
-		pass
+		self.start_time = time.time()
 		
 	def draw_slide(self, screen_surf):
-		pass
+		self.animation_func(screen_surf, ((time.time() - self.start_time)/interval)%1.0)
 		
 class TextSlide():
 	def __init__(self, text_boxes, images, back_colour=None):
