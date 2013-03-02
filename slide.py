@@ -6,18 +6,20 @@ default_font = pygame.font.SysFont("arial", 15)
 default_colour = (255, 255, 255)
 
 class TextBox():
-	def __init__(self, x, y, width, height, text, font=default_font, font_colour=default_colour):
+	def __init__(self, x, y, text, width, button_func=None, back_colour=None, font=default_font, font_colour=default_colour):
 		self.x = x; self.y = y
-		self.width = width; self.height = height
-		self.font = font; self.font_colour = font_colour
 		self.text = text
+		self.width = width; self.height = None
+		self.button_func = button_func
+		self.back_colour = back_colour
+		self.font = font; self.font_colour = font_colour
 		self.surf = None
 		#Note: Rendering in init for now
 		self.render()
 
 	def render(self):
-		self.surf = pygame.Surface((self.width, self.height), pygame.SRCALPHA, 32).convert_alpha() # This surface is transparent
-		wrap.render_text(self.surf, self.text, self.font, self.font_colour)
+		self.surf = wrap.render_text(self.width, self.text, self.font, self.font_colour, self.back_colour)
+		self.height = self.surf.get_height()
 
 class ImageBox():
 	def __init__(self, x, y, image_path, width=None, height=None):
@@ -39,12 +41,14 @@ class AnimationSlide():
 	pass
 		
 class TextSlide():
-	def __init__(self, text_boxes, images, back_colour):
+	def __init__(self, text_boxes, images, back_colour=None):
 		self.text_boxes = text_boxes
 		self.images = images
 		self.back_colour = back_colour
 
 	def draw_slide(self, screen_surf):
+		if self.back_colour is not None:
+			screen_surf.fill(self.back_colour)
 		for image in self.images:
 			screen_surf.blit(image.image, (image.x, image.y))
 		for text_box in self.text_boxes:
