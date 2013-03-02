@@ -45,6 +45,11 @@ class AnimationSlide():
 		self.animation_func = animation_func
 		self.interval = interval
 		self.loop = loop
+		self.time = 0.0
+
+	def start_slide(self):
+		pass
+		
 	def draw_slide(self, screen_surf):
 		pass
 		
@@ -54,6 +59,9 @@ class TextSlide():
 		self.images = images
 		self.back_colour = back_colour
 
+	def start_slide(self):
+		pass
+	
 	def draw_slide(self, screen_surf):
 		if self.back_colour is not None:
 			screen_surf.fill(self.back_colour)
