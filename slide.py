@@ -35,6 +35,9 @@ class ImageBox():
 			self.height = self.image.get_height()
 		self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
+class AnimationSlide():
+	pass
+		
 class TextSlide():
 	def __init__(self, text_boxes, images, back_colour):
 		self.text_boxes = text_boxes
@@ -46,3 +49,4 @@ class TextSlide():
 			screen_surf.blit(image.image, (image.x, image.y))
 		for text_box in self.text_boxes:
 			screen_surf.blit(text_box.surf, (text_box.x, text_box.y))
+
