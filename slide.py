@@ -52,7 +52,14 @@ class AnimationSlide():
 		self.start_time = time.time()
 		
 	def draw_slide(self, screen_surf):
-		self.animation_func(screen_surf, ((time.time() - self.start_time)/interval)%1.0)
+		if self.loop:
+			self.animation_func(screen_surf,\
+									((time.time() - self.start_time)/self.interval)%1.0)
+		elif time.time() - self.start_time < self.interval:
+			self.animation_func(screen_surf,\
+									((time.time() - self.start_time)/self.interval))
+		else:
+			self.animation_func(screen_surf, 1.0)
 		
 class TextSlide():
 	def __init__(self, text_boxes, images, back_colour=None):
