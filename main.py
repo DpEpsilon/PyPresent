@@ -35,8 +35,8 @@ s = slide.Slide(\
 		[slide.Animation(test_animation, 1, True)], BACKGROUND_COLOUR)
 
 
-#s = slide.Slide([], [], [)
-s.start_slide()
+slide.init(WIDTH, HEIGHT)
+s.start_slide(0, 1)
 
 
 while True:

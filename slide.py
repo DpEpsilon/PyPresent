@@ -1,10 +1,13 @@
 import pygame
 from pygame.locals import *
-import wrap
 import time
+
+import wrap
 
 default_font = pygame.font.SysFont("arial", 15)
 default_colour = (255, 255, 255)
+curr_slide = 0
+prev_box = None; next_box = None; quit_box = None
 
 class TextBox():
 	def __init__(self, x, y, text, width,\
@@ -65,10 +68,17 @@ class Slide():
 		self.animations = animations
 		self.back_colour = back_colour
 
-	def start_slide(self):
+	def start_slide(self, index, num_slides):
+		# Start animation
 		curr_time = time.time()
 		for anim in self.animations:
 			anim.start_time = curr_time
+		# Draw start, end and quit boxes
+		if index != 0:
+			self.text_boxes.append(prev_box)
+		if index != num_slides-1:
+			self.text_boxes.append(next_box)
+		self.text_boxes.append(quit_box)
 	
 	def draw_slide(self, screen_surf):
 		# Fill with back_colour
@@ -84,3 +94,20 @@ class Slide():
 		# Draw text boxes
 		for text_box in self.text_boxes:
 			screen_surf.blit(text_box.surf, (text_box.x, text_box.y))
+
+# Generic buttons
+def prev():
+	global curr_slide
+	curr_slide -= 1
+def next():
+	global curr_slide
+	curr_slide += 1
+def quit():
+	pygame.event.post(pygame.event.Event(QUIT))
+
+def init(slide_w, slide_h):
+	global prev_box; global next_box; global quit_box
+	prev_box = TextBox(40, slide_h-50, "PREV", 60, prev, (255, 0, 0))
+	next_box = TextBox(slide_w-100, slide_h-50, "NEXT", 60, next, (0, 255, 0))
+	quit_box = TextBox(slide_w/2 - 30, slide_h-50, "QUIT", 40, \
+						quit, (255, 255, 0))

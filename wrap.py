@@ -11,7 +11,7 @@ def render_text(width, text, font, font_colour, back_colour):
 		while end_line <= len(text) and\
 				font.size(" ".join(text[start_line:end_line]))[0] < width:
 			end_line += 1
-		if (start_line == end_line):
+		if (end_line - start_line <= 1):
 			raise Exception("Width too small")
 		lines.append((font.render(" ".join(text[start_line:end_line-1]),\
 									  True, font_colour), dest_height))
