@@ -27,14 +27,15 @@ def test_func():
 	global s
 	s.text_boxes.append(slide.TextBox(20, 300, "WORKED", 150, back_colour=(0, 0, 0)))
 
-#s = slide.TextSlide(\
-#	[slide.TextBox(20, 20, "I like muffins and cheesecacke emacs is the best", 150),\
-#		 slide.TextBox(20, 100, "LOLOL overlap lol hs1917",\
-#						   150, back_colour=(255, 0, 0), button_func=test_func)], \
-#		[slide.ImageBox(20, 100, "bliss.jpg", 150, 250)], BACKGROUND_COLOUR)
+s = slide.Slide(\
+	[slide.TextBox(20, 20, "I like muffins and cheesecacke emacs is the best", 150),\
+		 slide.TextBox(20, 100, "LOLOL overlap lol hs1917",\
+						   150, back_colour=(255, 0, 0), button_func=test_func)], \
+		[slide.ImageBox(20, 100, "bliss.jpg", 150, 250)], \
+		[slide.Animation(test_animation, 1, True)], BACKGROUND_COLOUR)
 
 
-s = slide.AnimationSlide(test_animation, 1, True)
+#s = slide.Slide([], [], [)
 s.start_slide()
 
 

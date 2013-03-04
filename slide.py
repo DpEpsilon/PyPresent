@@ -41,40 +41,46 @@ class ImageBox():
 			self.height = self.image.get_height()
 		self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
-class AnimationSlide():
+class Animation():
 	def __init__(self, animation_func, interval, loop=True):
 		self.animation_func = animation_func
 		self.interval = interval
 		self.loop = loop
 		self.start_time = 0.0
-
-	def start_slide(self):
-		self.start_time = time.time()
 		
-	def draw_slide(self, screen_surf):
+	def draw(self, screen_surf, curr_time):
 		if self.loop:
 			self.animation_func(screen_surf,\
-									((time.time() - self.start_time)/self.interval)%1.0)
-		elif time.time() - self.start_time < self.interval:
+									((curr_time - self.start_time)/self.interval)%1.0)
+		elif curr_time - self.start_time < self.interval:
 			self.animation_func(screen_surf,\
-									((time.time() - self.start_time)/self.interval))
+									((curr_time - self.start_time)/self.interval))
 		else:
 			self.animation_func(screen_surf, 1.0)
 		
-class TextSlide():
-	def __init__(self, text_boxes, images, back_colour=None):
+class Slide():
+	def __init__(self, text_boxes, images, animations, back_colour=None):
 		self.text_boxes = text_boxes
 		self.images = images
+		self.animations = animations
 		self.back_colour = back_colour
 
 	def start_slide(self):
-		pass
+		curr_time = time.time()
+		for anim in self.animations:
+			anim.start_time = curr_time
 	
 	def draw_slide(self, screen_surf):
+		# Fill with back_colour
 		if self.back_colour is not None:
 			screen_surf.fill(self.back_colour)
+		# Draw images
 		for image in self.images:
 			screen_surf.blit(image.image, (image.x, image.y))
+		# Advance animations
+		for anim in self.animations:
+			curr_time = time.time()
+			anim.draw(screen_surf, curr_time)
+		# Draw text boxes
 		for text_box in self.text_boxes:
 			screen_surf.blit(text_box.surf, (text_box.x, text_box.y))
-
