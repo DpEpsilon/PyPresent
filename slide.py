@@ -3,10 +3,11 @@ from pygame.locals import *
 import time
 
 import wrap
+import data
 
 default_font = pygame.font.SysFont("arial", 15)
 default_colour = (255, 255, 255)
-curr_slide = 0
+curr_slide = None
 prev_box = None; next_box = None; quit_box = None
 
 class TextBox():
@@ -67,16 +68,17 @@ class Slide():
 		self.images = images
 		self.animations = animations
 		self.back_colour = back_colour
+		self.next = None; self.prev = None
 
-	def start_slide(self, index, num_slides):
+	def start_slide(self):
 		# Start animation
 		curr_time = time.time()
 		for anim in self.animations:
 			anim.start_time = curr_time
 		# Draw start, end and quit boxes
-		if index != 0:
+		if self.prev is not None:
 			self.text_boxes.append(prev_box)
-		if index != num_slides-1:
+		if self.next is not None:
 			self.text_boxes.append(next_box)
 		self.text_boxes.append(quit_box)
 	
@@ -98,16 +100,27 @@ class Slide():
 # Generic buttons
 def prev():
 	global curr_slide
-	curr_slide -= 1
+	curr_slide = curr_slide.prev
+	curr_slide.start_slide()
 def next():
 	global curr_slide
-	curr_slide += 1
+	curr_slide = curr_slide.next
+	curr_slide.start_slide()
 def quit():
 	pygame.event.post(pygame.event.Event(QUIT))
 
+def preprocess(slides):
+	for slide in xrange(1, len(slides)):
+		slides[slide-1].next = slides[slide]
+		slides[slide].prev = slides[slide-1]
+
 def init(slide_w, slide_h):
 	global prev_box; global next_box; global quit_box
-	prev_box = TextBox(40, slide_h-50, "PREV", 60, prev, (255, 0, 0))
-	next_box = TextBox(slide_w-100, slide_h-50, "NEXT", 60, next, (0, 255, 0))
-	quit_box = TextBox(slide_w/2 - 30, slide_h-50, "QUIT", 40, \
+	prev_box = TextBox(20, slide_h-30, "PREV", 50, prev, (255, 0, 0))
+	next_box = TextBox(slide_w-70, slide_h-30, "NEXT", 50, next, (0, 255, 0))
+	quit_box = TextBox(slide_w/2 - 25, slide_h-30, "QUIT", 50, \
 						quit, (255, 255, 0))
+
+	preprocess(data.slides)
+	curr_slide = slides[0]
+	curr_slide.start_slide()
