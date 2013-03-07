@@ -8,31 +8,30 @@ HEIGHT = 400
 # Modules will assume that pygame has been initialised,
 # therefore they are imported after pygame.init()
 pygame.init()
-import slide
 
 pygame.display.set_mode((WIDTH, HEIGHT))
+import slide
+from data import slideshow, BACKGROUND_COLOUR
 screen = pygame.display.get_surface()
 
 test_image = pygame.image.load("bliss.jpg")
 test_image = pygame.transform.scale(test_image, (150,250))
 
-slide.init(WIDTH, HEIGHT)
-s.start_slide(1, 3)
+slideshow.start_slide()
 
 while True:
-
 	screen.fill(BACKGROUND_COLOUR)
-	s.draw_slide(screen)
+	slideshow.draw(screen)
 	pygame.display.flip()
 
 	for event in pygame.event.get():
 		if event.type == MOUSEBUTTONDOWN:
-			for box in s.text_boxes:
+			for box in slideshow.current_slide.text_boxes:
 				if box.button_func is None:
 					continue
 				if event.pos[0] >= box.x and event.pos[0] <= box.x+box.width and\
 						event.pos[1] >= box.y and event.pos[1] <= box.y+box.height:
-					box.button_func(slide.curr_slide)
+					box.button_func(slideshow)
 		if event.type == QUIT:
 			break
 	else:

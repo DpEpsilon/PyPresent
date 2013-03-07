@@ -3,7 +3,9 @@ from pygame.locals import *
 import time
 
 import wrap
-import data
+
+WIDTH = 200
+HEIGHT = 400
 
 default_font = pygame.font.SysFont("arial", 15)
 default_colour = (255, 255, 255)
@@ -98,20 +100,20 @@ def next_func(slideshow):
 	slideshow.next_slide()
 def quit_func(slideshow):
 	pygame.event.post(pygame.event.Event(QUIT))
-			
+
 class Slideshow():
 	def __init__(self, slides):
-		prev_box = TextBox(20, slide_h-30, "PREV", 50, prev_func, (255, 0, 0))
-		next_box = TextBox(slide_w-70, slide_h-30, "NEXT", 50, next_func, (0, 255, 0))
-		quit_box = TextBox(slide_w/2 - 25, slide_h-30, "QUIT", 50, \
+		prev_box = TextBox(20, HEIGHT-30, "PREV", 50, prev_func, (255, 0, 0))
+		next_box = TextBox(WIDTH-70, HEIGHT-30, "NEXT", 50, next_func, (0, 255, 0))
+		quit_box = TextBox(WIDTH/2 - 25, HEIGHT-30, "QUIT", 50, \
 							   quit_func, (255, 255, 0))
-		slides[0].text_box.append(quit_box)
+		slides[0].text_boxes.append(quit_box)
 		for slide in xrange(1, len(slides)):
 			slides[slide-1].next = slides[slide]
 			slides[slide-1].text_boxes.append(next_box)
 			slides[slide].prev = slides[slide-1]
 			slides[slide].text_boxes.append(prev_box)
-			slides[slide].text_box.append(quit_box)
+			slides[slide].text_boxes.append(quit_box)
 		self.slides = slides
 		self.current_slide = None
 
