@@ -75,12 +75,6 @@ class Slide():
 		curr_time = time.time()
 		for anim in self.animations:
 			anim.start_time = curr_time
-		# Draw start, end and quit boxes
-		if self.prev is not None:
-			self.text_boxes.append(prev_box)
-		if self.next is not None:
-			self.text_boxes.append(next_box)
-		self.text_boxes.append(quit_box)
 	
 	def draw_slide(self, screen_surf):
 		# Fill with back_colour
@@ -98,29 +92,57 @@ class Slide():
 			screen_surf.blit(text_box.surf, (text_box.x, text_box.y))
 
 # Generic buttons
-def prev():
-	global curr_slide
-	curr_slide = curr_slide.prev
-	curr_slide.start_slide()
-def next():
-	global curr_slide
-	curr_slide = curr_slide.next
-	curr_slide.start_slide()
-def quit():
+def prev_func(slideshow):
+	slideshow.prev_slide()
+def next_func(slideshow):
+	slideshow.next_slide()
+def quit_func(slideshow):
 	pygame.event.post(pygame.event.Event(QUIT))
+			
+class Slideshow():
+	def __init__(self, slides):
+		prev_box = TextBox(20, slide_h-30, "PREV", 50, prev_func, (255, 0, 0))
+		next_box = TextBox(slide_w-70, slide_h-30, "NEXT", 50, next_func, (0, 255, 0))
+		quit_box = TextBox(slide_w/2 - 25, slide_h-30, "QUIT", 50, \
+							   quit_func, (255, 255, 0))
+		slides[0].text_box.append(quit_box)
+		for slide in xrange(1, len(slides)):
+			slides[slide-1].next = slides[slide]
+			slides[slide-1].text_boxes.append(next_box)
+			slides[slide].prev = slides[slide-1]
+			slides[slide].text_boxes.append(prev_box)
+			slides[slide].text_box.append(quit_box)
+		self.slides = slides
+		self.current_slide = None
 
-def preprocess(slides):
-	for slide in xrange(1, len(slides)):
-		slides[slide-1].next = slides[slide]
-		slides[slide].prev = slides[slide-1]
+
+	def start_slide(self, slide=0):
+		self.current_slide = self.slides[slide]
+		self.current_slide.start_slide()
+
+	def next_slide(self):
+		if self.current_slide.next is None:
+			raise Exception("There is no next slide.")
+		self.current_slide = self.current_slide.next
+		self.current_slide.start_slide()
+
+	def prev_slide(self):
+		if self.current_slide.prev is None:
+			raise Exception("There is no previous slide.")
+		self.current_slide = self.current_slide.prev
+		self.current_slide.start_slide()
+		
+	def draw(self, screen_surf):
+		self.current_slide.draw_slide(screen_surf)
+	
+
 
 def init(slide_w, slide_h):
 	global prev_box; global next_box; global quit_box
-	prev_box = TextBox(20, slide_h-30, "PREV", 50, prev, (255, 0, 0))
-	next_box = TextBox(slide_w-70, slide_h-30, "NEXT", 50, next, (0, 255, 0))
+	prev_box = TextBox(20, slide_h-30, "PREV", 50, prev_func, (255, 0, 0))
+	next_box = TextBox(slide_w-70, slide_h-30, "NEXT", 50, next_func, (0, 255, 0))
 	quit_box = TextBox(slide_w/2 - 25, slide_h-30, "QUIT", 50, \
-						quit, (255, 255, 0))
+						quit_func, (255, 255, 0))
 
-	preprocess(data.slides)
 	curr_slide = slides[0]
 	curr_slide.start_slide()
