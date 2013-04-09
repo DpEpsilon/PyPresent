@@ -101,6 +101,10 @@ def next_func(slideshow):
 def quit_func(slideshow):
 	pygame.event.post(pygame.event.Event(QUIT))
 
+key_bindings = {K_RIGHT: next_func, \
+				K_LEFT: prev_func, \
+				K_SPACE: next_func}
+
 class Slideshow():
 	def __init__(self, slides):
 		prev_box = TextBox(20, HEIGHT-30, "PREV", 50, prev_func, (255, 0, 0))
@@ -124,13 +128,13 @@ class Slideshow():
 
 	def next_slide(self):
 		if self.current_slide.next is None:
-			raise Exception("There is no next slide.")
+			return
 		self.current_slide = self.current_slide.next
 		self.current_slide.start_slide()
 
 	def prev_slide(self):
 		if self.current_slide.prev is None:
-			raise Exception("There is no previous slide.")
+			return
 		self.current_slide = self.current_slide.prev
 		self.current_slide.start_slide()
 		
