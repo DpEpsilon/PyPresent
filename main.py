@@ -2,8 +2,6 @@
 import pygame
 from pygame.locals import *
 
-
-
 # Modules will assume that pygame has been initialised,
 # therefore they are imported after pygame.init()
 pygame.init()
