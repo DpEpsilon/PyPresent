@@ -4,8 +4,8 @@ import time
 
 import wrap
 
-WIDTH = 200
-HEIGHT = 400
+WIDTH = 800
+HEIGHT = 600
 
 default_font = pygame.font.SysFont("arial", 15)
 default_colour = (255, 255, 255)

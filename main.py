@@ -2,15 +2,16 @@
 import pygame
 from pygame.locals import *
 
-WIDTH = 200
-HEIGHT = 400
+
 
 # Modules will assume that pygame has been initialised,
 # therefore they are imported after pygame.init()
 pygame.init()
-
+from slide import WIDTH, HEIGHT
 pygame.display.set_mode((WIDTH, HEIGHT))
+
 import slide
+
 from data import slideshow, BACKGROUND_COLOUR
 screen = pygame.display.get_surface()
 
