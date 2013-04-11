@@ -21,11 +21,6 @@ def resolve_slideshow(dom_tree):
 	return slide.Slideshow(**dom_tree)
 
 def resolve_slide(dom_tree):
-	if 'type' in dom_tree:
-		slide_type = dom_tree.pop('type')
-	else:
-		slide_type = 'normal'
-
 	for i in xrange(len(dom_tree['text_boxes'])):
 		dom_tree['text_boxes'][i] = \
 			resolve_text_box(dom_tree['text_boxes'][i])
@@ -38,13 +33,7 @@ def resolve_slide(dom_tree):
 		dom_tree['animations'][i] = \
 			resolve_animation(dom_tree['animations'][i])
 	
-	if slide_type is 'normal':
-		return slide.Slide(**dom_tree)
-	elif slide_type is 'quiz':
-		raise NotImplemented("There is currently no support " \
-								 "for quiz slides.")
-	else:
-		raise Exception('invalid slide type')
+	return slide.Slide(**dom_tree)
 
 def resolve_text_box(dom_tree):
 	if 'font' in dom_tree:
