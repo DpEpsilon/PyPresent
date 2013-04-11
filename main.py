@@ -7,6 +7,7 @@ pygame.init()
 from slide import WIDTH, HEIGHT, key_bindings
 pygame.display.set_mode((WIDTH, HEIGHT))
 
+import parse
 import slide
 
 from data import slideshow, BACKGROUND_COLOUR
