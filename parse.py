@@ -7,6 +7,11 @@ import pygame
 def load_slideshow(filename):
 	slideshow_file = open(filename, "rU").read()
 	slideshow_dom = json.loads(slideshow_file)
+
+# The 'resolve' functions replace python dictionaries with
+# actual objects that can be used by pypresent by traversing
+# the dom tree given by the json file and replacing each
+# object it comes across.
 	
 def resolve_slideshow(dom_tree):
 	for i in xrange(len(dom_tree['slides'])):
