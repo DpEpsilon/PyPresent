@@ -28,6 +28,18 @@
 			],
 			"animations": [
 			]
+		},
+		{
+			"text_boxes": [],
+			"images": [],
+			"animations": [],
+			"quiz_answers": [
+				"Vim",
+				"Emacs",
+				"Joe",
+				"Nano"
+			],
+			"correct_answer": 1
 		}
 	]
 }

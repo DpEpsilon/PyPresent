@@ -63,14 +63,17 @@ class Animation():
 									((curr_time - self.start_time)/self.interval))
 		else:
 			self.animation_func(screen_surf, 1.0)
-		
+
 class Slide():
-	def __init__(self, text_boxes, images, animations, back_colour=None):
+	def __init__(self, text_boxes, images, animations, back_colour=None,\
+					 quiz_answers = None, correct_answer = 0):
 		self.text_boxes = text_boxes
 		self.images = images
 		self.animations = animations
 		self.back_colour = back_colour
 		self.next = None; self.prev = None
+		if quiz_answers is not None:
+			generate_quiz(self, quiz_answers, correct_answer)
 
 	def start_slide(self):
 		# Start animation
@@ -92,6 +95,24 @@ class Slide():
 		# Draw text boxes
 		for text_box in self.text_boxes:
 			screen_surf.blit(text_box.surf, (text_box.x, text_box.y))
+
+
+def make_image_appearence_func(x, y, image_path, width=None, height=None):
+	image = ImageBox(x, y, image_path, width, height)
+	def image_appearence_func(slideshow):
+		slideshow.current_slide.images.append(image)
+	return image_appearence_func
+
+def generate_quiz(slideshow, quiz_answers, correct_answer):
+	for i in xrange(len(quiz_answers)):
+		slideshow.text_boxes.append(\
+			TextBox(100, HEIGHT/2 + HEIGHT/len(quiz_answers)/2*i,\
+						quiz_answers[i], 650,\
+						make_image_appearence_func(\
+					50, HEIGHT/2 + HEIGHT/len(quiz_answers)/2*i,\
+						"tick.png" if correct_answer == i else "cross.png",\
+						40, 40)))
+		
 
 # Generic buttons
 def prev_func(slideshow):
