@@ -1,0 +1,33 @@
+{
+	"slides":
+	[
+		{
+			"text_boxes": [
+				{
+					"x": 100,
+					"y": 100,
+					"width": 600,
+					"text": "The Solid State Drive (SSD) is an electronic disk that is used to store data using integrates circuit assemblies to act as memory to continuously store data. Solid State Drives are distinguished from the standard Hard Disk by having no moving parts. In the standard Hard Disk, there is a spinning disk and movable read/write heads. This gives the Solid State Drive a faster, less susceptible to physical shock and quieter operation."
+				}
+			],
+			"images": [
+				{
+					"x": 100,
+					"y": 250,
+					"image_path": "ssd.jpg",
+					"width": 200,
+					"height": 200
+				},
+				{
+					"x": 400,
+					"y": 250,
+					"image_path": "inside_ssd.jpg",
+					"width": 200,
+					"height": 200
+				}
+			],
+			"animations": [
+			]
+		}
+	]
+}
