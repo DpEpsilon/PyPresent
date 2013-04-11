@@ -10,11 +10,11 @@ pygame.display.set_mode((WIDTH, HEIGHT))
 import parse
 import slide
 
-from data import slideshow, BACKGROUND_COLOUR
-screen = pygame.display.get_surface()
+#from data import slideshow, BACKGROUND_COLOUR
+BACKGROUND_COLOUR = (255, 255, 255)
 
-test_image = pygame.image.load("bliss.jpg")
-test_image = pygame.transform.scale(test_image, (150,250))
+slideshow = parse.load_slideshow("slideshow.json")
+screen = pygame.display.get_surface()
 
 slideshow.start_slide()
 
