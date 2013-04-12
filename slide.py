@@ -7,7 +7,7 @@ import wrap
 WIDTH = 800
 HEIGHT = 600
 
-default_font = pygame.font.SysFont("arial", 15)
+default_font = pygame.font.SysFont("Liberation Sans", 15)
 default_colour = (0, 0, 0)
 curr_slide = None
 prev_box = None; next_box = None; quit_box = None
