@@ -39,7 +39,7 @@ def resolve_text_box(dom_tree):
 	if 'font' in dom_tree:
 		size = 15
 		if 'font_size' in dom_tree:
-			size = dom_tree.pop(size)
+			size = dom_tree.pop('font_size')
 		dom_tree['font'] = pygame.font.SysFont(dom_tree['font'], size)
 	return slide.TextBox(**dom_tree)
 
